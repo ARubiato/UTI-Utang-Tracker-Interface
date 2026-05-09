@@ -1,0 +1,31 @@
+-- CreateTable
+CREATE TABLE "Person" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "name" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "DebtItem" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "personId" TEXT NOT NULL,
+    "itemName" TEXT NOT NULL,
+    "totalAmount" REAL NOT NULL,
+    "monthlyPayment" REAL NOT NULL,
+    "months" INTEGER NOT NULL,
+    "startDate" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    CONSTRAINT "DebtItem_personId_fkey" FOREIGN KEY ("personId") REFERENCES "Person" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Payment" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "debtItemId" TEXT NOT NULL,
+    "amount" REAL NOT NULL,
+    "paidAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Payment_debtItemId_fkey" FOREIGN KEY ("debtItemId") REFERENCES "DebtItem" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);
